@@ -6,6 +6,7 @@ import pandas as pd
 import tensorflow as tf
 import keras.layers as L
 from keras import backend as K
+from keras.utils.vis_utils import plot_model
 from keras.models import Model
 from keras.callbacks import ModelCheckpoint, Callback
 from keras.preprocessing import sequence
@@ -224,14 +225,14 @@ def model_create(ARGS):
         output = L.TimeDistributed(output_layer, name='time_distributed_out')(contexts)
         #Define the model with appropriate inputs
         model = Model(inputs=inputs_list, outputs=[output])
-
+        plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
         return model
 
     #Set Tensorflow to grow GPU memory consumption instead of grabbing all of it at once
     K.clear_session()
-    config = tf.ConfigProto(allow_soft_placement=True, log_device_placement=False)
+    config = tf.compat.v1.ConfigProto(allow_soft_placement=True, log_device_placement=False)
     config.gpu_options.allow_growth = True
-    tfsess = tf.Session(config=config)
+    tfsess = tf.compat.v1.Session(config=config)
     K.set_session(tfsess)
     #If there are multiple GPUs set up a multi-gpu model
     glist = get_available_gpus()

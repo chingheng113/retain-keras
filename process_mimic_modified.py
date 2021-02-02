@@ -15,6 +15,12 @@
 # dictionary.pkl: Python dictionary that maps string diagnosis codes to integer diagnosis codes.
 # dictionary_3digit.pkl: Python dictionary that maps string diagnosis codes to integer 3 digit diagnosis codes.
 
+
+"""
+modified by Jim
+"""
+
+
 import sys
 import pickle
 import pandas as pd
@@ -48,7 +54,7 @@ if __name__ == '__main__':
 
     print('Collecting mortality information')
     pid_dod_map = {}
-    infd = open(patients_file, 'r')
+    infd = open(os.path.join('data', patients_file), 'r')
     infd.readline()
     for line in infd:
         tokens = line.strip().split(',')
@@ -63,7 +69,7 @@ if __name__ == '__main__':
     print('Building pid-admission mapping, admission-date mapping')
     pid_adm_map = {}
     adm_date_map = {}
-    infd = open(admission_file, 'r')
+    infd = open(os.path.join('data', admission_file), 'r')
     infd.readline()
     for line in infd:
         tokens = line.strip().split(',')
@@ -78,7 +84,7 @@ if __name__ == '__main__':
     print('Building admission-dxList mapping')
     adm_dx_map = {}
     adm_dx_map_3digit = {}
-    infd = open(diagnosis_file, 'r')
+    infd = open(os.path.join('data', diagnosis_file), 'r')
     infd.readline()
     for line in infd:
         tokens = line.strip().split(',')
